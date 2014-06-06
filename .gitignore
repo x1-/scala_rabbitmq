@@ -1,0 +1,48 @@
+*.class
+
+# Exclude OS X folder attributes
+.DS_Store
+._*
+
+# Exclude temp nibs and swap files
+*~.nib
+*.swp
+
+# Exclude user-specific XCode 3 and 4 files
+*.mode1
+*.mode1v3
+*.mode2v3
+*.perspective
+*.perspectivev3
+*.pbxuser
+*.xcworkspace
+xcuserdata
+
+# backup files
+*~
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea
+
+# eclipse
+.classpath
+.project
+.settings
+.pydevproject
+.springBeans
+log.txt
+out/
+
+
+#build files
+BUILD_DATE
+build/
+.gradle
+target/
+
+*.log
+logfile
+

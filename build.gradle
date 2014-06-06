@@ -1,0 +1,58 @@
+apply plugin: 'scala'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+repositories {
+  mavenCentral()
+  maven {
+    url "https://oss.sonatype.org/content/repositories/releases/"
+  }
+  maven {
+    url "https://oss.sonatype.org/content/repositories/snapshots/"
+  }
+}
+
+ext {
+  scalaVersion = '2.11'
+  scalaVersionRevision = '0'
+  scalaXmlVersion = 'M4'
+  akkaVersion = '2.3.2'
+  logbackVersion = '1.1.2'
+  amqpVersion = '1.4'
+  junitVersion = '4.11'
+  specs2Version = '2.3.11'
+  mockitoVersion = '1.9.5'
+}
+
+configurations {
+  scalaLibrary
+  scalaCompiler
+}
+
+dependencies {
+  scalaLibrary "org.scala-lang:scala-library:$scalaVersion.$scalaVersionRevision"
+  scalaCompiler "org.scala-lang:scala-compiler:$scalaVersion.$scalaVersionRevision"
+
+  compile "org.scala-lang:scala-library:$scalaVersion.$scalaVersionRevision"
+  compile "org.scala-lang:scala-xml:$scalaVersion.$scalaVersionRevision-$scalaXmlVersion"
+  compile "com.typesafe.akka:akka-osgi_$scalaVersion:$akkaVersion"
+  compile "com.typesafe.akka:akka-slf4j_$scalaVersion:$akkaVersion"
+  compile "ch.qos.logback:logback-classic:$logbackVersion"
+  compile "com.github.sstone:amqp-client_$scalaVersion:$amqpVersion"
+
+  testCompile "junit:junit:$junitVersion"
+  testCompile "org.mockito:mockito-core:$mockitoVersion"
+  testCompile "org.specs2:specs2_$scalaVersion:$specs2Version"
+  testCompile "com.typesafe.akka:akka-testkit_$scalaVersion:$akkaVersion"
+}
+
+tasks.withType(ScalaCompile) {
+  scalaCompileOptions.useCompileDaemon = false
+  scalaCompileOptions.useAnt = false
+
+  configure(scalaCompileOptions.forkOptions) {
+    memoryMaximumSize = '1g'
+    jvmArgs = ['-XX:MaxPermSize=512m']
+  }
+}
