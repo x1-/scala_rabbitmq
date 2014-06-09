@@ -23,7 +23,7 @@ class ConsumersStarter extends Actor with ActorLogging {
 
   lazy val addresses: Array[Address] = Array(
     new Address( "192.168.0.101", 5672 ),
-    new Address( "192.168.0.101", 5672 )
+    new Address( "192.168.0.102", 5672 )
   )
 
   lazy val amqpActor = system.actorOf(

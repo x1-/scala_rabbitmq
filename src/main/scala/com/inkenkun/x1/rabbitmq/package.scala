@@ -13,7 +13,7 @@ package object rabbitmq {
 
   lazy val connection: ConnectionFactory =
     ConnectionOwner.buildConnFactory(
-      host = addresses.head.getHost,
+      host = addresses.head.getHost,  // addressesに指定されたノードの先頭をデフォルトのホストとしています。
       port = addresses.head.getPort,
       vhost = "/",
       user = "admin",
@@ -22,12 +22,12 @@ package object rabbitmq {
 
   lazy val addresses: Array[Address] = Array(
     new Address( "192.168.0.101", 5672 ),
-    new Address( "192.168.0.101", 5672 )
+    new Address( "192.168.0.102", 5672 )
   )
 
   lazy val amqpActor = system.actorOf(
     ConnectionOwner.props(
       connFactory = connection,
-      reconnectionDelay = 500 millis,
+      reconnectionDelay = 500 millis, // RabbitMQにポーリングする間隔です。
       addresses = Some( addresses ) ) )
 }
